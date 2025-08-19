@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// Function prototypes
+// Function 
 void user_menu();
 void booking_ticket();
 void cancel_ticket();
@@ -11,8 +11,11 @@ void bus_102();
 void bus_103();
 void logout();
 
-// Global variables for login
+// Global variables 
 char username[20], password[20];
+
+int booked_101 = 0, booked_102 = 0, booked_103 = 0;
+int cancelled_101 = 0, cancelled_102 = 0, cancelled_103 = 0;
 
 int main() {
     char login_name[20], login_pass[20];
@@ -36,7 +39,7 @@ int main() {
 
     if (strcmp(username, login_name) == 0 && strcmp(password, login_pass) == 0) {
         printf("\nLogin successful!\n");
-        user_menu(); // Show menu after successful login
+        user_menu(); 
     } else {
         printf("\nLogin failed! Invalid credentials.\n");
     }
@@ -78,18 +81,39 @@ void booking_ticket() {
     scanf("%d", &bus_number);
     printf("Enter number of seats to book: ");
     scanf("%d", &seats);
+
+    if (bus_number == 101) {
+        booked_101 += seats;
+    } else if (bus_number == 102) {
+        booked_102 += seats;
+    } else if (bus_number == 103) {
+        booked_103 += seats;
+    }
+
     printf("Ticket booked successfully! %d seat(s) booked on bus %d.\n", seats, bus_number);
 }
 
 // Cancel function
 void cancel_ticket() {
-    int bus_number, seat_number;
+    int bus_number, seats;
     printf("\n--- Cancel Ticket ---\n");
-    printf("Enter bus number: ");
+    printf("Enter bus number (101/102/103): ");
     scanf("%d", &bus_number);
-    printf("Enter seat number: ");
-    scanf("%d", &seat_number);
-    printf("Cancel successful! Seat %d on bus %d has been cancelled.\n", seat_number, bus_number);
+    printf("Enter number of seats to cancel: ");
+    scanf("%d", &seats);
+
+    if (bus_number == 101) {
+        cancelled_101 += seats;
+        if (booked_101 >= seats) booked_101 -= seats;
+    } else if (bus_number == 102) {
+        cancelled_102 += seats;
+        if (booked_102 >= seats) booked_102 -= seats;
+    } else if (bus_number == 103) {
+        cancelled_103 += seats;
+        if (booked_103 >= seats) booked_103 -= seats;
+    }
+
+    printf("Cancel successful! %d seat(s) cancelled on bus %d.\n", seats, bus_number);
 }
 
 // Check bus status
@@ -112,29 +136,35 @@ void check() {
 // Bus details
 void bus_101() {
     printf("\nBus Number:    101\n");
-    printf("Source:          Aligar\n");
+    printf("Source:          Aligarh\n");
     printf("Destination:     Hathras\n");
     printf("Total seats:     60\n");
-    printf("Available seats: 40\n");
     printf("Fare:            800.00\n");
+    printf("Booked seats:    %d\n", booked_101);
+    printf("Cancelled:       %d\n", cancelled_101);
+    printf("Available:       %d\n", 60 - booked_101);
 }
 
 void bus_102() {
     printf("\nBus Number:    102\n");
     printf("Source:          Gurugram\n");
-    printf("Destination:     Dehli\n");
+    printf("Destination:     Delhi\n");
     printf("Total seats:     50\n");
-    printf("Available seats: 25\n");
     printf("Fare:            400.00\n");
+    printf("Booked seats:    %d\n", booked_102);
+    printf("Cancelled:       %d\n", cancelled_102);
+    printf("Available:       %d\n", 50 - booked_102);
 }
 
 void bus_103() {
     printf("\nBus Number:    103\n");
     printf("Source:          Ghaziabad\n");
-    printf("Destination:     Bulanshahr\n");
+    printf("Destination:     Bulandshahr\n");
     printf("Total seats:     40\n");
-    printf("Available seats: 20\n");
     printf("Fare:            500.00\n");
+    printf("Booked seats:    %d\n", booked_103);
+    printf("Cancelled:       %d\n", cancelled_103);
+    printf("Available:       %d\n", 40 - booked_103);
 }
 
 // Logout function
