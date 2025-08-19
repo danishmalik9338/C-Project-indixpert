@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// Global variables for bookings and cancellations
+// Global variables 
 int booked_101 = 0, cancelled_101 = 0;
 int booked_102 = 0, cancelled_102 = 0;
 int booked_103 = 0, cancelled_103 = 0;
@@ -45,7 +45,7 @@ void bus_103() {
 }
 
 int main() {
-    // Example: मान लो कुछ seats book और cancel कर दिए
+    
     booked_101 = 10;
     cancelled_101 = 2;
 
@@ -54,7 +54,7 @@ int main() {
     booked_103 = 15;
     cancelled_103 = 3;
 
-    // अब buses की details दिखाएँगे
+    // bus detail
     bus_101();
     bus_102();
     bus_103();
